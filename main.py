@@ -270,6 +270,7 @@ while running:
                         game.text = game.font.render("", 1, (255, 0, 0))
                         if not game.pause :
                             game.begginTime = time.time()
+                            game.chrono = game.maxTime
                 if not game.pause:
                     if game.menu:
                         if b1_1_rect.collidepoint(event.pos):

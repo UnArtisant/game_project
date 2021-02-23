@@ -23,7 +23,8 @@ class Game :
         self.font = pygame.font.Font("src/ressources_graphiques/police.ttf",50)
         self.text = self.font.render("",1,(255, 0, 0))
         self.begginTime = time.time()
-        self.chrono = 120
+        self.maxTime = 120
+        self.chrono = self.maxTime
 
     def reset(self):
         self.is_playing = False
@@ -41,7 +42,7 @@ class Game :
         self.player1.update_health_bar(screen)
         self.player2.update_health_bar(screen)
 
-        tact = 10 - ceil(time.time() - self.begginTime)
+        tact = self.maxTime - ceil(time.time() - self.begginTime)
         if tact <= 0 :
             self.is_playing = False
             if self.player1.health > self.player2.health:
