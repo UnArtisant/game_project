@@ -13,10 +13,15 @@ from src.Service.Perso1.PlayerService import Perso1
 from src.Service.Perso2.PlayerService import Perso2
 from src.Service.Perso3.PlayerService import Perso3
 from src.Service.Perso4.PlayerService import Perso4
+import time
 pygame.init()
+pygame.mixer.init()
 
 clock = pygame.time.Clock()
 FPS = 60
+
+"""pygame.mixer.music.load("src/sounds/music.mp3")
+pygame.mixer.music.play(-1)"""
 
 #Initiation des touches
 #J1
@@ -263,6 +268,8 @@ while running:
                     if play_button_rect.collidepoint(event.pos):
                         game.is_playing = True
                         game.text = game.font.render("", 1, (255, 0, 0))
+                        if not game.pause :
+                            game.begginTime = time.time()
                 if not game.pause:
                     if game.menu:
                         if b1_1_rect.collidepoint(event.pos):

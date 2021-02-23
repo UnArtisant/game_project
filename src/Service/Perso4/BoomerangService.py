@@ -8,7 +8,7 @@ class boomerang(pygame.sprite.Sprite):
         self.type = 3
         self.velocity = 20
         self.image = pygame.image.load("src/Service/Perso4/graphismes/projectile.png")
-        self.image = pygame.transform.scale(self.image,(50,50))
+        self.image = pygame.transform.scale(self.image,(30,30))
         self.rect = self.image.get_rect()
         self.direction = player.direction
         self.player = player
@@ -29,7 +29,10 @@ class boomerang(pygame.sprite.Sprite):
         self.first_time = False
 
     def rotate(self):
-        self.angle += 10
+        if self.direction == 1:
+            self.angle -= 10
+        else:
+            self.angle += 10
         self.angle %= 360
         self.image = pygame.transform.rotozoom(self.origin,self.angle,1)
         self.rect = self.image.get_rect(center=self.rect.center)

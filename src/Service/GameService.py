@@ -3,6 +3,8 @@ from src.Service.Perso2.PlayerService import Perso2
 from src.Service.Perso3.PlayerService import Perso3
 from src.Service.Perso4.PlayerService import Perso4
 import pygame
+import time
+from math import *
 class Game :
 
     def __init__(self,screen):
@@ -20,6 +22,8 @@ class Game :
         self.screen = screen
         self.font = pygame.font.Font("src/ressources_graphiques/police.ttf",50)
         self.text = self.font.render("",1,(255, 0, 0))
+        self.begginTime = time.time()
+        self.chrono = 120
 
     def reset(self):
         self.is_playing = False
@@ -37,6 +41,37 @@ class Game :
         self.player1.update_health_bar(screen)
         self.player2.update_health_bar(screen)
 
+        tact = 10 - ceil(time.time() - self.begginTime)
+        if tact <= 0 :
+            self.is_playing = False
+            if self.player1.health > self.player2.health:
+                self.text = self.font.render(f"Player 1 win ",1,(255, 0, 0 ))
+            elif self.player1.health < self.player2.health:
+                self.text = self.font.render(f"Player 2 win ",1,(255, 0, 0 ))
+            else :
+                self.text = self.font.render(f"Draw", 1, (255, 0, 0))
+
+        if tact < self.chrono:
+            if tact // 60 > 0:
+                if tact // 60 >= 10:
+                    minute = str(tact // 60)
+                else:
+                    minute = f"0{tact // 60}"
+            else:
+                minute = "00"
+            if tact % 60 > 0:
+                if tact % 60 >= 10:
+                    seconde = str(tact % 60)
+                else:
+                    seconde = f"0{tact % 60}"
+            else:
+                seconde = "00"
+
+            self.textChrono = self.font.render(f"{minute}:{seconde}",1,(0, 0, 0 ))
+            self.chrono = tact
+
+        widthchrono = self.textChrono.get_width()
+        screen.blit(self.textChrono, (540 - widthchrono //2, 0))
         # Faire avancer toutes les boules de feu
 
         for projectile in self.player1.projectiles:
