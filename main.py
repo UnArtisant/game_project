@@ -228,6 +228,7 @@ while running:
                 else :
                     game.is_playing = False
                     game.pause = True
+                    game.timepassed = time.time() - game.begginTime
 
             #Lancement de la boule de feu quand la touche est pressée
             if not game.player1.bot:
@@ -271,6 +272,8 @@ while running:
                         if not game.pause :
                             game.begginTime = time.time()
                             game.chrono = game.maxTime
+                        else :
+                            game.begginTime = time.time() - game.timepassed
                 if not game.pause:
                     if game.menu:
                         if b1_1_rect.collidepoint(event.pos):
