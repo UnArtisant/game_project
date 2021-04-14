@@ -2,6 +2,7 @@ from src.Service.Perso1.PlayerService import Perso1
 from src.Service.Perso2.PlayerService import Perso2
 from src.Service.Perso3.PlayerService import Perso3
 from src.Service.Perso4.PlayerService import Perso4
+from src.Service.HealthBonus.HealthService import healthBoost
 import pygame
 import time
 from math import *
@@ -15,6 +16,8 @@ class Game :
         self.is_bot_2 = False
         self.player1 = Perso1(self,  0,self.is_bot_1)
         self.player2 = Perso1(self, 1,self.is_bot_2)
+        self.bonus = pygame.sprite.Group()
+        self.bonus.add(healthBoost(self))
         #Impossibilité d'appeler player2 dans l'initiation de player1 car player2 n'a pas encore été défini
         self.player1.finish_init(self.player2)
         self.player2.finish_init(self.player1)
@@ -83,13 +86,16 @@ class Game :
         for projectile in self.player2.projectiles:
             projectile.move()
 
-
+        for bonus in self.bonus:
+            bonus.check()
+        
         # Faire avancer toutes les boules de feu
 
         # Afficher à l'écran les projectiles
         self.player1.projectiles.draw(screen)
 
         self.player2.projectiles.draw(screen)
+        self.bonus.draw(screen)
 
         # Si le joueur a un cooldown alors le diminuerx
         self.player1.low_cooldown()

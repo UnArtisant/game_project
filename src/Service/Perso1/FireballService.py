@@ -23,6 +23,9 @@ class fireball(pygame.sprite.Sprite):
         self.dist = 0
         self.max = 50
         self.long = 700
+        self.alpha = 45
+        self.g_constant = 9.8
+
 
     def rotate(self):
         self.angle += 3
@@ -41,6 +44,7 @@ class fireball(pygame.sprite.Sprite):
                     self.dist += self.velocity
                     a = self.max/((self.long/2)**2 -self.long**2/2 )
                     self.rect.y = self.origin_y + math.ceil(-a*(self.dist**2 - self.dist*self.long))
+
                 else :
                     self.rect.x -= self.velocity
                     self.dist += self.velocity
