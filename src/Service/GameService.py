@@ -3,6 +3,7 @@ from src.Service.Perso2.PlayerService import Perso2
 from src.Service.Perso3.PlayerService import Perso3
 from src.Service.Perso4.PlayerService import Perso4
 from src.Service.HealthBonus.HealthService import healthBoost
+from src.Service.AttackBonus.DamagesService import damagesBoost
 import pygame
 import random
 import time
@@ -77,7 +78,7 @@ class Game :
             self.chrono = tact
 
         if not self.bonus and not random.randint(0,500):
-            self.bonus.add(healthBoost(self))
+            self.bonus.add([healthBoost(self),damagesBoost(self)][random.randint(0,1)])
 
         widthchrono = self.textChrono.get_width()
         screen.blit(self.textChrono, (540 - widthchrono //2, 0))
