@@ -5,18 +5,21 @@ class Menu():
         # Images de numeros de persos :
         self.perso_1 = pygame.image.load("src/ressources_graphiques/1_boutton.png")
         self.perso_1 = pygame.transform.scale(self.perso_1, (100, 100))
-        self.perso_2 = pygame.image.load("src/ressources_graphiques/2_boutton.png")
-        self.perso_2 = pygame.transform.scale(self.perso_2, (100, 100))
         self.perso_1_pressed = pygame.image.load("src/ressources_graphiques/1_boutton_pressed.png")
         self.perso_1_pressed = pygame.transform.scale(self.perso_1_pressed, (100, 100))
+
+        self.perso_2 = pygame.image.load("src/ressources_graphiques/2_boutton.png")
+        self.perso_2 = pygame.transform.scale(self.perso_2, (100, 100))
         self.perso_2_pressed = pygame.image.load("src/ressources_graphiques/2_boutton_pressed.png")
         self.perso_2_pressed = pygame.transform.scale(self.perso_2_pressed, (100, 100))
+
         self.perso_3 = pygame.image.load("src/ressources_graphiques/3_boutton.png")
         self.perso_3 = pygame.transform.scale(self.perso_3, (100, 100))
-        self.perso_4 = pygame.image.load("src/ressources_graphiques/4_boutton.png")
-        self.perso_4 = pygame.transform.scale(self.perso_4, (100, 100))
         self.perso_3_pressed = pygame.image.load("src/ressources_graphiques/3_boutton_pressed.png")
         self.perso_3_pressed = pygame.transform.scale(self.perso_3_pressed, (100, 100))
+
+        self.perso_4 = pygame.image.load("src/ressources_graphiques/4_boutton.png")
+        self.perso_4 = pygame.transform.scale(self.perso_4, (100, 100))
         self.perso_4_pressed = pygame.image.load("src/ressources_graphiques/4_boutton_pressed.png")
         self.perso_4_pressed = pygame.transform.scale(self.perso_4_pressed, (100, 100))
 
@@ -35,6 +38,8 @@ class Menu():
         self.j_choix_rect = self.j_choix.get_rect()
         self.j_choix_rect.x = self.j1_image_rect.x
         self.j_choix_rect.y = self.j1_image_rect.y - 10 - self.j1_image_rect.height
+
+
         self.b_choix = pygame.image.load("src/ressources_graphiques/bot.png")
         self.b_choix_pressed = pygame.image.load("src/ressources_graphiques/bot_pressed.png")
         self.b_choix = pygame.transform.scale(self.b_choix, (120, 100))
@@ -43,7 +48,6 @@ class Menu():
         self.b_choix_rect.x = self.j_choix_rect.x + 10 + self.j_choix_rect.width
         self.b_choix_rect.y = self.j_choix_rect.y
 
-        # Boutons J1 choix perso
         self.b1_1_rect = self.perso_1.get_rect()
         self.b1_1_rect.x = 145
         self.b1_1_rect.y = 505
@@ -51,9 +55,11 @@ class Menu():
         self.b2_1_rect = self.perso_2.get_rect()
         self.b2_1_rect.x = 145 + self.j1_image_rect.width - self.b2_1_rect.width
         self.b2_1_rect.y = 505
+
         self.b3_1_rect = self.perso_3.get_rect()
         self.b3_1_rect.x = 145
         self.b3_1_rect.y = 505 + self.b1_1_rect.height + 10
+
         self.b4_1_rect = self.perso_4.get_rect()
         self.b4_1_rect.x = 145 + self.j1_image_rect.width - self.b2_1_rect.width
         self.b4_1_rect.y = 505 + self.b1_1_rect.height + 10
@@ -68,10 +74,11 @@ class Menu():
         self.j_choix_2_rect = self.j_choix.get_rect()
         self.j_choix_2_rect.x = self.j2_image_rect.x
         self.j_choix_2_rect.y = self.j2_image_rect.y - 10 - self.j1_image_rect.height
+
         self.b_choix_2_rect = self.b_choix.get_rect()
         self.b_choix_2_rect.x = self.j_choix_2_rect.x + 10 + self.j_choix_rect.width
         self.b_choix_2_rect.y = self.j_choix_2_rect.y
-        # Boutons J2 choix perso
+
         self.b1_2_rect = self.perso_1.get_rect()
         self.b1_2_rect.x = 685
         self.b1_2_rect.y = 505
@@ -83,6 +90,7 @@ class Menu():
         self.b3_2_rect = self.perso_3.get_rect()
         self.b3_2_rect.x = 685
         self.b3_2_rect.y = 505 + self.b1_1_rect.height + 10
+
         self.b4_2_rect = self.perso_4.get_rect()
         self.b4_2_rect.x = 685 + self.j2_image_rect.width - self.b2_2_rect.width
         self.b4_2_rect.y = 505 + self.b1_1_rect.height + 10
@@ -92,10 +100,12 @@ class Menu():
         self.punch_button_not_pressed = pygame.transform.scale(self.punch_button_not_pressed, (76, 76))
         self.punch_button_pressed = pygame.image.load("src/ressources_graphiques/punch_pressed.png")
         self.punch_button_pressed = pygame.transform.scale(self.punch_button_pressed, (76, 76))
+
         self.attack_button_not_pressed = pygame.image.load("src/ressources_graphiques/attack_not_pressed.png")
         self.attack_button_not_pressed = pygame.transform.scale(self.attack_button_not_pressed, (76, 76))
         self.attack_button_pressed = pygame.image.load("src/ressources_graphiques/attack_pressed.png")
         self.attack_button_pressed = pygame.transform.scale(self.attack_button_pressed, (76, 76))
+
         self.block_button_not_pressed = pygame.image.load("src/ressources_graphiques/block_not_pressed.png")
         self.block_button_not_pressed = pygame.transform.scale(self.block_button_not_pressed, (76, 76))
         self.block_button_pressed = pygame.image.load("src/ressources_graphiques/block_pressed.png")
@@ -149,6 +159,8 @@ class Menu():
         screen.blit(self.b_choix, self.b_choix_rect)
         screen.blit(self.j_choix, self.j_choix_2_rect)
         screen.blit(self.b_choix, self.b_choix_2_rect)
+
+        # Affichage des boutons de choix du perso du joueur 1
         if game.player1.id == 0:
             screen.blit(self.perso_1_pressed, self.b1_1_rect)
         elif game.player1.id == 1:
@@ -157,6 +169,7 @@ class Menu():
             screen.blit(self.perso_3_pressed, self.b3_1_rect)
         elif game.player1.id == 3:
             screen.blit(self.perso_4_pressed, self.b4_1_rect)
+        # Affichage des boutons de choix du perso du joueur 2
         if game.player2.id == 0:
             screen.blit(self.perso_1_pressed, self.b1_2_rect)
         elif game.player2.id == 1:
@@ -165,15 +178,18 @@ class Menu():
             screen.blit(self.perso_3_pressed, self.b3_2_rect)
         elif game.player2.id == 3:
             screen.blit(self.perso_4_pressed, self.b4_2_rect)
+        #Affichage du bouton du choix du type du joueur 1 (Joueur/Bot)
         if game.is_bot_1:
             screen.blit(self.b_choix_pressed, self.b_choix_rect)
         else:
             screen.blit(self.j_choix_pressed, self.j_choix_rect)
+        # Affichage du bouton du choix du type du joueur 2 (Joueur/Bot)
         if game.is_bot_2:
             screen.blit(self.b_choix_pressed, self.b_choix_2_rect)
         else:
             screen.blit(self.j_choix_pressed, self.j_choix_2_rect)
 
+        #Affichage des boutons de choix de touches
         if not self.choice_punch_1:
             screen.blit(self.punch_button_not_pressed, self.punch_button_1)
         else:

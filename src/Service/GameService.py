@@ -4,10 +4,10 @@ from src.Service.Perso3.PlayerService import Perso3
 from src.Service.Perso4.PlayerService import Perso4
 from src.Service.HealthBonus.HealthService import healthBoost
 import pygame
+import random
 import time
 from math import *
 class Game :
-
     def __init__(self,screen):
         self.is_playing = False
         self.menu = False
@@ -17,7 +17,6 @@ class Game :
         self.player1 = Perso1(self,  0,self.is_bot_1)
         self.player2 = Perso1(self, 1,self.is_bot_2)
         self.bonus = pygame.sprite.Group()
-        self.bonus.add(healthBoost(self))
         #Impossibilité d'appeler player2 dans l'initiation de player1 car player2 n'a pas encore été défini
         self.player1.finish_init(self.player2)
         self.player2.finish_init(self.player1)
@@ -26,7 +25,7 @@ class Game :
         self.font = pygame.font.Font("src/ressources_graphiques/police.ttf",50)
         self.text = self.font.render("",1,(255, 0, 0))
         self.begginTime = time.time()
-        self.maxTime = 30
+        self.maxTime = 45
         self.chrono = self.maxTime
         self.timepassed = 0
 
@@ -50,13 +49,13 @@ class Game :
         tact = self.maxTime - ceil(time.time() - self.begginTime)
         if tact <= 0 :
             self.is_playing = False
-            self.reset()
             if self.player1.health > self.player2.health:
-                self.text = self.font.render(f"Player 1 win ",1,(255, 0, 0 ))
+                self.text = self.font.render(f"Player 1 win ",1,(255, 0, 0))
             elif self.player1.health < self.player2.health:
-                self.text = self.font.render(f"Player 2 win ",1,(255, 0, 0 ))
+                self.text = self.font.render(f"Player 2 win ",1,(255, 0, 0))
             else :
                 self.text = self.font.render(f"Draw", 1, (255, 0, 0))
+            self.reset()
 
         if tact < self.chrono:
             if tact // 60 > 0:
@@ -76,6 +75,9 @@ class Game :
 
             self.textChrono = self.font.render(f"{minute}:{seconde}",1,(0, 0, 0 ))
             self.chrono = tact
+
+        if not self.bonus and not random.randint(0,500):
+            self.bonus.add(healthBoost(self))
 
         widthchrono = self.textChrono.get_width()
         screen.blit(self.textChrono, (540 - widthchrono //2, 0))
