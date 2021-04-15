@@ -160,7 +160,7 @@ class Perso4(pygame.sprite.Sprite):
         #Check si il y a des projectiles ennemis à proximité
         for projectile in self.enemy.projectiles:
 
-            if (projectile.direction==1 and (0 < self.rect.x - projectile.rect.x < 600)) or (projectile.direction == 0 and (0 < projectile.rect.x - self.rect.x - self.rect.width < 600)):
+            if (projectile.direction==1 and (0 < self.rect.x - projectile.rect.x < 300)) or (projectile.direction == 0 and (0 < projectile.rect.x - self.rect.x - self.rect.width < 300)):
                 # Si le projectile est une boule de feu et est à la bonne distance, essayer de sauter
                 if projectile.type != 2 and projectile.type:
                     if self.jump<=0 and not random.randint(0,10) and projectile.origin_y  > 400:

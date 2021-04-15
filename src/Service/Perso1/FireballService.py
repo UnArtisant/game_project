@@ -18,12 +18,13 @@ class fireball(pygame.sprite.Sprite):
             self.rect.x = player.rect.x-50
         self.rect.y = player.rect.y + 80
         self.origin_y = self.rect.y
+        self.origin_x = self.rect.x
         self.origin = self.image
         self.angle = 0
         self.dist = 0
         self.max = 50
         self.long = 700
-        self.alpha = 45
+        self.alpha = 2*math.pi/6
         self.g_constant = 9.8
 
 
@@ -40,16 +41,24 @@ class fireball(pygame.sprite.Sprite):
         if not (self.game.check_colision(self,self.player.enemys)):
             if 0<self.rect.x < 1080  and self.rect.y < (700 - self.rect.height):
                 if self.direction == 1:
-                    self.rect.x += self.velocity
+                    #self.rect.x += self.velocity
+                    x = self.velocity * math.cos(self.alpha) * (self.dist/15)
+                    self.rect.x = self.origin_x + x
                     self.dist += self.velocity
                     a = self.max/((self.long/2)**2 -self.long**2/2 )
-                    self.rect.y = self.origin_y + math.ceil(-a*(self.dist**2 - self.dist*self.long))
+                    #self.rect.y = self.origin_y + math.ceil(-a*(self.dist**2 - self.dist*self.long))
+                    self.rect.y = self.origin_y -( (-1/2) * self.g_constant * ((self.dist/150)**2) + self.velocity*2 * math.sin(self.alpha) * (self.dist/150))
 
                 else :
-                    self.rect.x -= self.velocity
+                    # self.rect.x -= self.velocity
+                    x = self.velocity * math.cos(self.alpha) * (self.dist / 15)
+                    self.rect.x = self.origin_x - x
                     self.dist += self.velocity
                     a = self.max / ((self.long / 2) ** 2 - self.long ** 2 / 2)
-                    self.rect.y = self.origin_y + math.ceil(-a * (self.dist ** 2 - self.dist * self.long))
+
+                    # self.rect.y = self.origin_y + math.ceil(-a*(self.dist**2 - self.dist*self.long))
+                    self.rect.y = self.origin_y - ((-1 / 2) * self.g_constant * ((self.dist / 150) ** 2) + self.velocity * 2 * math.sin(self.alpha) * (self.dist / 150))
+
                 self.rotate()
             else :
                 self.remove()
