@@ -141,6 +141,12 @@ class Menu():
         self.block_button_2.y = self.attack_button_2.y
         self.choice_block_2 = False
 
+        self.parametre_button = pygame.image.load("src/ressources_graphiques/parametre.png")
+        self.parametre_button = pygame.transform.scale(self.parametre_button, (50,75))
+        self.parametre_button_rect = self.parametre_button.get_rect()
+        self.parametre_button_rect.x = 20
+        self.parametre_button_rect.y = 20
+
     def printButtons(self,screen,game):
 
         # Afficher tous les boutons du menu
@@ -159,6 +165,7 @@ class Menu():
         screen.blit(self.b_choix, self.b_choix_rect)
         screen.blit(self.j_choix, self.j_choix_2_rect)
         screen.blit(self.b_choix, self.b_choix_2_rect)
+        screen.blit(self.parametre_button,self.parametre_button_rect)
 
         # Affichage des boutons de choix du perso du joueur 1
         if game.player1.id == 0:

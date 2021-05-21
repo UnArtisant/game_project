@@ -2,9 +2,9 @@
 Projet jeu Python
 Raphael BARRIET
 Pierre-Marie HERRBURGER--PIETRI
-Marco ....
-Ahyl ....
-Zyad .....
+Marco-Naji SERHAL
+Ahyl PRADHAN
+Zyad ZEKRI
 """
 import pygame
 from pygame.locals import *
@@ -82,11 +82,9 @@ while running:
     game.screen = screen
     #Application du fond d'écran
     if game.is_playing:
-        background = background_1
+        screen.blit(game.background.bg,(0,0))
     else:
-        background = background_menu
-
-    screen.blit(background,(0,0))
+        screen.blit(background_menu,(0,0))
 
     chosing = False
     if game.is_playing:
@@ -96,6 +94,7 @@ while running:
             menu.printButtons(screen,game)
         else :
             screen.blit(play_button, play_button_rect)
+            screen.blit(menu.parametre_button,menu.parametre_button_rect)
         if game.pause :
             screen.blit(reset_button, reset_button_rect)
             game.text = game.font.render("",1,(255, 0, 0))
@@ -182,6 +181,11 @@ while running:
 
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            if not game.is_playing and not game.pause and menu.parametre_button_rect.collidepoint(event.pos):
+                if game.menu:
+                    game.menu = False
+                else:
+                    game.menu = True
             if not game.is_playing:
                 if not game.menu:
                     if play_button_rect.collidepoint(event.pos):

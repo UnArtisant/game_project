@@ -4,6 +4,7 @@ from src.Service.Perso3.PlayerService import Perso3
 from src.Service.Perso4.PlayerService import Perso4
 from src.Service.HealthBonus.HealthService import healthBoost
 from src.Service.AttackBonus.DamagesService import damagesBoost
+from src.Service.BackgroundService import background
 import pygame
 import random
 import time
@@ -29,6 +30,7 @@ class Game :
         self.maxTime = 45
         self.chrono = self.maxTime
         self.timepassed = 0
+        self.background = background()
 
     def reset(self):
         self.is_playing = False
@@ -38,6 +40,7 @@ class Game :
         self.player1.finish_init(self.player2)
         self.player2.finish_init(self.player1)
         self.begginTime = 0
+        self.background.chooseBackground();
 
     def update(self,screen,forward_1,forward_2,backward_1,backward_2):
         self.screen = screen
