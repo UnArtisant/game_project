@@ -2,6 +2,7 @@ import pygame
 
 class Menu():
     def __init__(self):
+        #Determination des images des boutons et de leurs place
         # Images de numeros de persos :
         self.perso_1 = pygame.image.load("src/ressources_graphiques/1_boutton.png")
         self.perso_1 = pygame.transform.scale(self.perso_1, (100, 100))
@@ -142,7 +143,7 @@ class Menu():
         self.choice_block_2 = False
 
         self.parametre_button = pygame.image.load("src/ressources_graphiques/parametre.png")
-        self.parametre_button = pygame.transform.scale(self.parametre_button, (50,75))
+        self.parametre_button = pygame.transform.scale(self.parametre_button, (100,50))
         self.parametre_button_rect = self.parametre_button.get_rect()
         self.parametre_button_rect.x = 20
         self.parametre_button_rect.y = 20

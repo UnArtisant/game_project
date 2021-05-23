@@ -19,10 +19,10 @@ class Perso1(pygame.sprite.Sprite):
         self.punch_freeze = 15
         self.paradeReduction = 0.6
         self.velocity = 7
-        self.image = pygame.image.load("src/Service/Perso1/graphismes/Ryu.gif")
-        self.image = pygame.transform.scale(self.image,(100,200))
+        self.image = pygame.image.load("src/Service/Perso1/graphismes/Ryu.png")
+        self.image = pygame.transform.scale(self.image,(200,200))
         self.origin = self.image
-        if self.num_player == 0 :
+        if self.num_player == 1 :
             self.image = pygame.transform.flip(self.origin,True,False)
         self.rect = self.image.get_rect()
         self.rect.x = [0,1080-self.rect.width][self.num_player]
@@ -46,15 +46,15 @@ class Perso1(pygame.sprite.Sprite):
         self.enemys.add(self.enemy)
 
     def parade_on(self):
-        if not self.freeze :
+        if not self.freeze:
             self.parade = True
             self.image = pygame.image.load("src/Service/Perso1/graphismes/Ryu_parade.png")
             self.image = pygame.transform.scale(self.image, (100, 200))
-            self.image = pygame.transform.flip(self.image,self.direction == 1,False)
+            self.image = pygame.transform.flip(self.image,self.direction == 0,False)
 
     def parade_off(self):
         self.parade = False
-        self.image = pygame.transform.flip(self.origin,self.direction == 1,False)
+        self.image = pygame.transform.flip(self.origin,self.direction == 0,False)
 
     def low_freeze(self):
         if self.freeze:
@@ -62,9 +62,9 @@ class Perso1(pygame.sprite.Sprite):
             if self.freeze >= 1:
                 self.image = pygame.image.load("src/Service/Perso1/graphismes/Ryu_freezed.png")
                 self.image = pygame.transform.scale(self.image, (100, 200))
-                self.image = pygame.transform.flip(self.image, self.direction==1, False)
+                self.image = pygame.transform.flip(self.image, self.direction==0, False)
             else :
-                self.image = pygame.transform.flip(self.origin,self.direction == 1,False)
+                self.image = pygame.transform.flip(self.origin,self.direction == 0,False)
 
     def low_cooldown(self):
         if self.cooldown>0 :
@@ -99,14 +99,14 @@ class Perso1(pygame.sprite.Sprite):
             if self.rect.x+ self.rect.width < 1080:
                 self.rect.x += self.velocity
             self.direction = 1
-            self.image = pygame.transform.flip(self.origin,True,False)
+            self.image = self.origin
 
     def move_left(self):
         if not self.parade and not self.freeze:
             if 0<self.rect.x :
                 self.rect.x -= self.velocity
             self.direction = 0
-            self.image = self.origin
+            self.image = pygame.transform.flip(self.origin,True,False)
 
     def take_damages(self,dmg,freeze):
         if self.parade :
@@ -118,7 +118,6 @@ class Perso1(pygame.sprite.Sprite):
         if freezebool:
             if self.freeze < freeze:
                 self.freeze = freeze
-
         #Si la vie arrive à 0
         if self.health <= 0:
             self.game.text = self.game.font.render(f"Player {self.enemy.num_player +1} win ",1,(255, 0, 0 ))

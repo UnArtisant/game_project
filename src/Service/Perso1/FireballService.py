@@ -8,11 +8,12 @@ class fireball(pygame.sprite.Sprite):
         self.type = 1
         self.velocity = 20
         self.image = pygame.image.load("src/Service/Perso1/graphismes/projectile.png")
-        self.image = pygame.transform.scale(self.image,(30,30))
+        self.image = pygame.transform.scale(self.image,(50,50))
+        self.image = pygame.transform.flip(self.image, 1-player.direction, False)
         self.rect = self.image.get_rect()
         self.direction = player.direction
         self.player = player
-        if self.direction:
+        if self.player.direction:
             self.rect.x = player.rect.x + player.rect.width
         else:
             self.rect.x = player.rect.x-50
@@ -20,7 +21,6 @@ class fireball(pygame.sprite.Sprite):
         self.origin_y = self.rect.y
         self.origin_x = self.rect.x
         self.origin = self.image
-        self.angle = 0
         self.dist = 0
         self.max = 50
         self.long = 700
@@ -28,11 +28,6 @@ class fireball(pygame.sprite.Sprite):
         self.g_constant = 9.8
 
 
-    def rotate(self):
-        self.angle += 3
-        self.angle %= 360
-        self.image = pygame.transform.rotozoom(self.origin,self.angle,1)
-        self.rect = self.image.get_rect(center=self.rect.center)
 
     def remove(self):
         self.player.projectiles.remove(self)
@@ -41,25 +36,17 @@ class fireball(pygame.sprite.Sprite):
         if not (self.game.check_colision(self,self.player.enemys)):
             if 0<self.rect.x < 1080  and self.rect.y < (700 - self.rect.height):
                 if self.direction == 1:
-                    #self.rect.x += self.velocity
                     x = self.velocity * math.cos(self.alpha) * (self.dist/15)
                     self.rect.x = self.origin_x + x
                     self.dist += self.velocity
-                    a = self.max/((self.long/2)**2 -self.long**2/2 )
-                    #self.rect.y = self.origin_y + math.ceil(-a*(self.dist**2 - self.dist*self.long))
                     self.rect.y = self.origin_y -( (-1/2) * self.g_constant * ((self.dist/150)**2) + self.velocity*2 * math.sin(self.alpha) * (self.dist/150))
 
                 else :
-                    # self.rect.x -= self.velocity
                     x = self.velocity * math.cos(self.alpha) * (self.dist / 15)
                     self.rect.x = self.origin_x - x
                     self.dist += self.velocity
-                    a = self.max / ((self.long / 2) ** 2 - self.long ** 2 / 2)
-
-                    # self.rect.y = self.origin_y + math.ceil(-a*(self.dist**2 - self.dist*self.long))
                     self.rect.y = self.origin_y - ((-1 / 2) * self.g_constant * ((self.dist / 150) ** 2) + self.velocity * 2 * math.sin(self.alpha) * (self.dist / 150))
 
-                self.rotate()
             else :
                 self.remove()
         else :

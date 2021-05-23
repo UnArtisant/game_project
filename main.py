@@ -56,9 +56,9 @@ background_menu = pygame.image.load('src/ressources_graphiques/menu_background.j
 background_menu = pygame.transform.scale(background_menu,(1080,720))
 #Creation du bouton
 play_button = pygame.image.load("src/ressources_graphiques/button.png")
-play_button = pygame.transform.scale(play_button,(400,150))
+play_button = pygame.transform.scale(play_button,(300,150))
 play_button_rect = play_button.get_rect()
-play_button_rect.x = screen.get_width()//3.33
+play_button_rect.x = screen.get_width()//2 - play_button_rect.width//2
 play_button_rect.y = screen.get_height()//2 - play_button_rect.height//2
 
 #Bouttons selection de persos :
@@ -94,7 +94,8 @@ while running:
             menu.printButtons(screen,game)
         else :
             screen.blit(play_button, play_button_rect)
-            screen.blit(menu.parametre_button,menu.parametre_button_rect)
+            if not game.pause:
+                screen.blit(menu.parametre_button,menu.parametre_button_rect)
         if game.pause :
             screen.blit(reset_button, reset_button_rect)
             game.text = game.font.render("",1,(255, 0, 0))
