@@ -4,6 +4,7 @@ import math
 class fireball(pygame.sprite.Sprite):
     def __init__(self,player,game):
         super().__init__()
+        #Creer une boule de feu et la positionner a l'emplacement du joueur qui l'a crée
         self.game = game
         self.type = 1
         self.velocity = 20
@@ -33,8 +34,10 @@ class fireball(pygame.sprite.Sprite):
         self.player.projectiles.remove(self)
 
     def move(self):
+        #Si il ne touche pas l'ennemi
         if not (self.game.check_colision(self,self.player.enemys)):
             if 0<self.rect.x < 1080  and self.rect.y < (700 - self.rect.height):
+                #Avancer en fonction de l'equation de trajectoire
                 if self.direction == 1:
                     x = self.velocity * math.cos(self.alpha) * (self.dist/15)
                     self.rect.x = self.origin_x + x
@@ -50,5 +53,6 @@ class fireball(pygame.sprite.Sprite):
             else :
                 self.remove()
         else :
+            # Si colision : supprimer et faire des dommages à l'ennemi
             self.player.enemy.take_damages(dmg = self.player.fireBallDmg,freeze= self.player.fireball_freeze)
             self.remove()

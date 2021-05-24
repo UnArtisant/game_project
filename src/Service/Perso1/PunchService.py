@@ -3,6 +3,7 @@ import pygame
 class punch(pygame.sprite.Sprite):
     def __init__(self,player,game):
         super().__init__()
+        #Initier en fonction des caracteristiques du joueur
         self.type = 0
         self.game = game
         self.player = player
@@ -25,6 +26,7 @@ class punch(pygame.sprite.Sprite):
 
     def move(self):
         self.dist -= 1
+        #Avancer si possible
         if not (self.game.check_colision(self,self.player.enemys)):
             if 0<self.rect.x < 1080 :
                 if self.direction == 1:
@@ -34,6 +36,7 @@ class punch(pygame.sprite.Sprite):
             else :
                 self.remove()
         else :
+            #Si collision faire des degats et supprimer
             self.player.enemy.take_damages(dmg = self.player.fistDmg,freeze= self.player.punch_freeze)
             self.remove()
         if self.dist <= 0:

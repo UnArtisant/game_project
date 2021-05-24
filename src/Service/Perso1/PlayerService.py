@@ -11,6 +11,7 @@ class Perso1(pygame.sprite.Sprite):
         self.num_player = num
         self.max_health = 200
         self.enemy = 0
+        #Dictionnaire des animations
         self.animations = {}
         self.animations[0] = pygame.transform.scale(pygame.image.load("src/Service/Perso1/graphismes/Marche/marche6.png"),(150,200))
         self.animations[1] = []
@@ -22,7 +23,9 @@ class Perso1(pygame.sprite.Sprite):
         self.animation_time = 100
         self.action = 0
         self.frame = 0
+
         self.enemys = pygame.sprite.Group()
+        #Caracteristiques du perso
         self.health = self.max_health
         self.fireBallDmg = 20
         self.fistDmg = 15
@@ -34,6 +37,7 @@ class Perso1(pygame.sprite.Sprite):
         self.origin = self.image
         if self.num_player == 1 :
             self.image = pygame.transform.flip(self.origin,True,False)
+        #Positionnement du perso
         self.rect = self.image.get_rect()
         self.rect.x = [0,1080-self.rect.width][self.num_player]
         self.rect.y = 700 - self.rect.height
@@ -114,54 +118,78 @@ class Perso1(pygame.sprite.Sprite):
             self.jump = self.jump_time
 
     def jump_action(self):
+        #quand le joueur est en saut :
         if self.jump:
+            #Equation de saut
             jump = self.jump_time//2 - self.jump
             self.rect.y = 700 - self.rect.height + math.ceil((self.jump_high / (self.jump_time//2)**2) * (jump ** 2 - (self.jump_time//2)**2))
             self.jump -= self.jump_speed
         else:
+            #Sinon le remettre sur le sol
             self.rect.y = 700 - self.rect.height
 
     def move_right(self):
+        #Si le joueur est en mesure de bouger
         if not self.parade and not self.freeze:
+            #Si il n'est pas sur les limites du terrain
             if self.rect.x+ self.rect.width < 1080:
+                #Le faire avancer
                 self.rect.x += self.velocity
             self.direction = 1
+            #Changer sa direction
             if self.action != 1:
+                #Lancer une animation de marche
                 self.action = 1
                 self.frame = 0
 
 
     def move_left(self):
+        # Si le joueur est en mesure de bouger
         if not self.parade and not self.freeze:
+            #Si il n'est pas sur les limites du terrain
             if 0<self.rect.x :
+                #Le faire avancer
                 self.rect.x -= self.velocity
             self.direction = 0
+            #Changer sa direction
             if self.action != 1:
+                #Lancer une animation de marche
                 self.action = 1
                 self.frame = 0
 
     def take_damages(self,dmg,freeze):
         if self.parade :
+            #Si il parre, réduire les dommages
             dmg *= 1 - self.paradeReduction
+            #Faire en sorte qu'il ne soit pas freeze
             freezebool = False
         else :
+            #Sinon il est freeze
             freezebool = True
         self.health -= dmg
+        #Diminuer sa vie
         if freezebool:
+            #Si il va etre freeze
             if self.freeze < freeze:
+                #Si il est deja freeze pour une plus longue durée ne pas le freeze
                 self.freeze = freeze
+                #Le freeze pour une durée freeze
         #Si la vie arrive à 0
         if self.health <= 0:
+            #Si il n'a plus de vie, le considerer comme mort, afficher la victoire et réinitialiser le jeu
             self.game.text = self.game.font.render(f"Player {self.enemy.num_player +1} win ",1,(255, 0, 0 ))
             self.game.reset()
 
     def update_health_bar(self,surface):
+        #Choisir une couleur en fonction du joueur
         if self.num_player==1:
             bar_color = (255, 0, 0)
         else :
             bar_color = (74, 202, 25)
+        #Couleur de l'arriere plan
         bg_bar_color = (105, 102, 102)
         x = self.max_health//100
+        #choisir la position et afficher la barre
         bg_bar_position = [self.rect.x, self.rect.y -20,self.max_health//x,10]
         bar_position = [self.rect.x, self.rect.y -20,self.health//x,10]
         pygame.draw.rect(surface,bg_bar_color,bg_bar_position)

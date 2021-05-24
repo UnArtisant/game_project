@@ -6,7 +6,7 @@ class damagesBoost(pygame.sprite.Sprite):
         self.game = game
         self.regen = 20
         self.image = pygame.image.load("src/Service/AttackBonus/crossed.png")
-        self.image = pygame.transform.scale(self.image, (50, 50))
+        self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
         self.rect.x = 1080/2 - self.rect.width/2
         self.rect.y = 720/2 - self.rect.height/2
