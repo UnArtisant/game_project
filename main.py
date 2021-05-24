@@ -111,7 +111,7 @@ while running:
 
     #Afficher le résultat : Joueur gagnant
     text_rect = game.text.get_rect()
-    screen.blit(game.text,(540 - text_rect.width//2,250))
+    screen.blit(game.text,(540 - text_rect.width//2,200))
 
     #mise a jour de l'écran
     pygame.display.flip()
