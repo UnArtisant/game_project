@@ -52,10 +52,8 @@ class Perso1(pygame.sprite.Sprite):
         self.last_update =pygame.time.get_ticks()
 
     def animate(self):
-        print(f"action :{self.action} frame :{self.frame}")
         if self.action != 0:
             current_time = pygame.time.get_ticks()
-            print(f"len :{self.last_update - current_time}")
             if current_time - self.last_update >= self.animation_time:
                 self.last_update = current_time
                 self.frame +=1
@@ -75,7 +73,7 @@ class Perso1(pygame.sprite.Sprite):
         if not self.freeze:
             self.parade = True
             self.image = pygame.image.load("src/Service/Perso1/graphismes/Ryu_parade.png")
-            self.image = pygame.transform.scale(self.image, (100, 200))
+            self.image = pygame.transform.scale(self.image, (150, 200))
             self.image = pygame.transform.flip(self.image,self.direction == 0,False)
 
     def parade_off(self):
@@ -87,7 +85,7 @@ class Perso1(pygame.sprite.Sprite):
             self.freeze -= 1
             if self.freeze >= 1:
                 self.image = pygame.image.load("src/Service/Perso1/graphismes/Ryu_freezed.png")
-                self.image = pygame.transform.scale(self.image, (100, 200))
+                self.image = pygame.transform.scale(self.image, (150, 200))
                 self.image = pygame.transform.flip(self.image, self.direction==0, False)
             else :
                 self.image = pygame.transform.flip(self.origin,self.direction == 0,False)
