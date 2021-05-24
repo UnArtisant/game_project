@@ -11,6 +11,17 @@ class Perso1(pygame.sprite.Sprite):
         self.num_player = num
         self.max_health = 200
         self.enemy = 0
+        self.animations = {}
+        self.animations[0] = pygame.transform.scale(pygame.image.load("src/Service/Perso1/graphismes/Marche/marche6.png"),(150,200))
+        self.animations[1] = []
+        self.animations[2] = []
+        for i in range(1,7) :
+            self.animations[1].append(pygame.transform.scale(pygame.image.load(f"src/Service/Perso1/graphismes/Marche/marche{i}.png"),(150,200)))
+        for i in range(1, 5):
+            self.animations[2].append(pygame.transform.scale(pygame.image.load(f"src/Service/Perso1/graphismes/Punch/punch{i}.png"),(150,200)))
+        self.animation_time = 100
+        self.action = 0
+        self.frame = 0
         self.enemys = pygame.sprite.Group()
         self.health = self.max_health
         self.fireBallDmg = 20
@@ -19,8 +30,7 @@ class Perso1(pygame.sprite.Sprite):
         self.punch_freeze = 15
         self.paradeReduction = 0.6
         self.velocity = 7
-        self.image = pygame.image.load("src/Service/Perso1/graphismes/Ryu.png")
-        self.image = pygame.transform.scale(self.image,(200,200))
+        self.image = self.animations[0]
         self.origin = self.image
         if self.num_player == 1 :
             self.image = pygame.transform.flip(self.origin,True,False)
@@ -39,6 +49,22 @@ class Perso1(pygame.sprite.Sprite):
         self.freeze = 0
         self.bot = bot
         self.try_parade = [False,0]
+        self.last_update =pygame.time.get_ticks()
+
+    def animate(self):
+        print(f"action :{self.action} frame :{self.frame}")
+        if self.action != 0:
+            current_time = pygame.time.get_ticks()
+            print(f"len :{self.last_update - current_time}")
+            if current_time - self.last_update >= self.animation_time:
+                self.last_update = current_time
+                self.frame +=1
+                if self.frame>= len(self.animations[self.action]):
+                    self.frame = 0
+                    self.action = 0
+                    self.image =  pygame.transform.flip(self.animations[self.action],not self.direction,False)
+                else :
+                    self.image = pygame.transform.flip(self.animations[self.action][self.frame],not self.direction,False)
 
     def finish_init(self,enemy):
         self.enemys = pygame.sprite.Group()
@@ -81,6 +107,9 @@ class Perso1(pygame.sprite.Sprite):
         if not self.parade and not self.cooldown_punch and not self.freeze:
             self.projectiles.add(punch(self,self.game))
             self.cooldown_punch = 40
+            if self.action != 2:
+                self.action = 2
+                self.frame = 0
 
     def press_jump(self):
         if self.rect.y == 700 - self.rect.height and not self.freeze and not self.parade:
@@ -99,14 +128,19 @@ class Perso1(pygame.sprite.Sprite):
             if self.rect.x+ self.rect.width < 1080:
                 self.rect.x += self.velocity
             self.direction = 1
-            self.image = self.origin
+            if self.action != 1:
+                self.action = 1
+                self.frame = 0
+
 
     def move_left(self):
         if not self.parade and not self.freeze:
             if 0<self.rect.x :
                 self.rect.x -= self.velocity
             self.direction = 0
-            self.image = pygame.transform.flip(self.origin,True,False)
+            if self.action != 1:
+                self.action = 1
+                self.frame = 0
 
     def take_damages(self,dmg,freeze):
         if self.parade :

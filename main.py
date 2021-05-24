@@ -16,14 +16,17 @@ from src.Service.Perso2.PlayerService import Perso2
 from src.Service.Perso3.PlayerService import Perso3
 from src.Service.Perso4.PlayerService import Perso4
 import time
+
+#Initier pygame et le son (mixer)
 pygame.init()
 pygame.mixer.init()
-
+#initier la clock et determiner le FPS
 clock = pygame.time.Clock()
 FPS = 60
-
+#Initier une instance de la classe Menu : menu
 menu = Menu()
 
+#Choisir la musique
 music = pygame.mixer.Sound("src/sounds/dripfighters.wav")
 music.play(-1)
 
@@ -88,17 +91,25 @@ while running:
 
     chosing = False
     if game.is_playing:
+        #Si en jeu : faire toutes les actions d'updates
         game.update(screen,forward_1,forward_2,backward_1,backward_2)
     else :
+        #Si pas en jeu :
         if game.menu:
+            #Si c'est le menu : afficher les boutons
             menu.printButtons(screen,game)
         else :
+            #Sinon : Afficher l'écran d'accueil
             screen.blit(play_button, play_button_rect)
             if not game.pause:
+                #Si pas en pause : Afficher le bouton de settings
                 screen.blit(menu.parametre_button,menu.parametre_button_rect)
         if game.pause :
+            #Si c'est en pause : Afficher le bouton de retour au menu
             screen.blit(reset_button, reset_button_rect)
             game.text = game.font.render("",1,(255, 0, 0))
+
+    #Afficher le résultat : Joueur gagnant
     text_rect = game.text.get_rect()
     screen.blit(game.text,(540 - text_rect.width//2,250))
 
@@ -107,12 +118,15 @@ while running:
 
     #Fermeture du programme quand on clique sur la croix
     for event in pygame.event.get():
+        #Si clic sur la croix : fermer le jeu
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
+        #Si le type d'événement est une touche préssée :
         elif event.type == pygame.KEYDOWN:
             #Indiquer que la touche est pressée
             game.pressed[event.key] = True
+            #Si l'utilisateur est entrain de choisir ses touches, modifier la touche à modifier :
             chosing = menu.choice_attack_1 or menu.choice_block_1 or menu.choice_punch_1 or menu.choice_attack_2 or menu.choice_block_2 or menu.choice_punch_2
             if chosing:
                 if menu.choice_attack_1:
@@ -135,8 +149,7 @@ while running:
                     menu.choice_block_2 = False
 
             else:
-
-                #Afficher le menu
+                #Afficher le menu si Echap
                 if event.key == 27:
                     if not game.is_playing and not game.pause:
                         if game.menu:
@@ -147,8 +160,7 @@ while running:
                         game.is_playing = False
                         game.pause = True
                         game.timepassed = time.time() - game.begginTime
-
-                #Lancement de la boule de feu quand la touche est pressée
+                #Lancement de l'action quand la touche est pressée Si ce n'est pas un bot
                 if not game.player1.bot:
                     if event.key == spe_1 :
                         game.player1.attack_spe()
@@ -180,7 +192,7 @@ while running:
                 if event.key == block_2:
                     game.player2.parade_off()
 
-
+        # Check si c'est un click sur un bouton de menu, si oui, appliquer l'action correspondant au bouton choisi
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if not game.is_playing and not game.pause and menu.parametre_button_rect.collidepoint(event.pos):
                 if game.menu:
@@ -283,7 +295,8 @@ while running:
                     if reset_button_rect.collidepoint(event.pos):
                         game.reset()
 
-
+    #Appliquer la clock
     clock.tick(FPS)
 
+#Quitter le jeu
 pygame.quit()
